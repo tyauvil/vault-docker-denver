@@ -4,6 +4,19 @@
 
 Repository for Vault demos. Vault/Consul container based on Alpine Linux.
 
+Download the Vault client for your laptop
+https://vaultproject.io/downloads.html
+
+The Vault client will need two environment variables to function:
+##### VAULT_ADDR
+This is the IP address of the Docker host including the port that the Vault server is listening on, 8200 by default. For docker-machine it would be:
+
+    VAULT_ADDR=192.168.99.100:8200
+
+##### VAULT_TOKEN
+This is the authentication token needed to access Vault. The root token is created upon initialization of Vault. Using the root token from the next example would look like:
+
+    VAULT_TOKEN=1845d3df-0d21-ac4a-84de-b444e7540927
 
 #### Vault in four easy steps
     $ docker-compose up
