@@ -1,5 +1,5 @@
-mariadb:
-  image: tyauvil/mariadb:10.1.8
+mysql:
+  image: mysql:5.7
   environment:
     - "MYSQL_ROOT_PASSWORD=secret"
   ports:
@@ -21,10 +21,9 @@ vault:
   user: vault
   volumes:
     - ./vault/vault.hcl:/etc/vault.hcl
-    - ./vault/nsswitch.conf:/etc/nsswitch.conf
   links:
     - "consul:consul"
-    - "mariadb:mariadb"
+    - "mysql:mysql"
   ports:
     - 8200:8200
   environment:
