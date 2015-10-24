@@ -11,7 +11,7 @@ https://vaultproject.io/downloads.html
 ##### VAULT_ADDR
 This is the IP address of the Docker host including the port that the Vault server is listening on, 8200 by default. For docker-machine it would be:
 
-    VAULT_ADDR=192.168.99.100:8200
+    VAULT_ADDR="http://192.168.99.100:8200"
 
 ##### VAULT_TOKEN
 This is the authentication token needed to access Vault. The root token is created upon initialization of Vault. Using the root token from the next example would look like:
@@ -20,7 +20,7 @@ This is the authentication token needed to access Vault. The root token is creat
 
 ### Vault in four easy steps
     $ docker-compose up
-    $ export VAULT_ADDR="$docker_host_ip":8200
+    $ export VAULT_ADDR="http://$docker_host_ip:8200"
     $ vault init -key-shares=1 -key-threshold=1
     Key 1: ec07477efcf07a319977e45cf3d3925f36f83ccbf1a092ff5f5c1e582b5ec042
     Initial Root Token: 1845d3df-0d21-ac4a-84de-b444e7540927
