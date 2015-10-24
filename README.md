@@ -10,15 +10,15 @@ Repository for Vault demos. Vault and Consul containers based on Alpine Linux.
 
 #### Write a secret, then read it, then delete it
 
-$ export VAULT_TOKEN=$vault_root_token
-$ vault write secret/foo value=bar
-Success! Data written to: secret/foo
-$ vault read secret/foo
-Key           	Value
-lease_duration	2592000
-value         	bar
-$ vault delete secret/foo
-Success! Deleted 'secret/foo'
+    $ export VAULT_TOKEN=$vault_root_token
+    $ vault write secret/foo value=bar
+    Success! Data written to: secret/foo
+    $ vault read secret/foo
+    Key           	Value
+    lease_duration	2592000
+    value         	bar
+    $ vault delete secret/foo
+    Success! Deleted 'secret/foo'
 
 #### Create a policy, generate a token
 
