@@ -4,10 +4,10 @@
 
 Repository for Vault demos. Vault/Consul container based on Alpine Linux.
 
-Download the Vault client for your laptop
+Download the Vault client for your laptop here (or use Homebrew):
 https://vaultproject.io/downloads.html
 
-The Vault client will need two environment variables to function:
+#### The Vault client will need two environment variables to function:
 ##### VAULT_ADDR
 This is the IP address of the Docker host including the port that the Vault server is listening on, 8200 by default. For docker-machine it would be:
 
@@ -18,7 +18,7 @@ This is the authentication token needed to access Vault. The root token is creat
 
     VAULT_TOKEN=1845d3df-0d21-ac4a-84de-b444e7540927
 
-#### Vault in four easy steps
+### Vault in four easy steps
     $ docker-compose up
     $ export VAULT_ADDR="$docker_host_ip":8200
     $ vault init -key-shares=1 -key-threshold=1
@@ -34,7 +34,7 @@ This is the authentication token needed to access Vault. The root token is creat
     your Vault will remain permanently sealed.
     $ vault unseal
 
-#### Write a secret, read it, then delete it
+### Write a secret, read it, then delete it
 
     $ export VAULT_TOKEN=$vault_root_token
     $ vault write secret/foo value=bar
@@ -46,7 +46,7 @@ This is the authentication token needed to access Vault. The root token is creat
     $ vault delete secret/foo
     Success! Deleted 'secret/foo'
 
-#### Create a policy, generate a token, test permissions
+### Create a policy, generate a token, test permissions
 
     $ vi sample_policy.hcl
     $ cat sample_policy.hcl
@@ -75,7 +75,7 @@ This is the authentication token needed to access Vault. The root token is creat
 
     * permission denied
 
-#### Dynamic secrets: use Vault to create a dynamic MySQL user account
+### Dynamic secrets: use Vault to create a dynamic MySQL user account
 
     $ vault mount mysql
     Successfully mounted 'mysql' at 'mysql'!
