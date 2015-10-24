@@ -7,7 +7,7 @@ mysql:
 
 consul:
   #build: .
-  image: tyauvil/alipine-vault-consul:latest
+  image: tyauvil/alpine-vault-consul:latest
   user: consul
   volumes:
     - ./files/consul.json:/etc/consul.json
@@ -19,7 +19,7 @@ consul:
 
 vault:
   #build: .
-  image: tyauvil/alipine-vault-consul:latest
+  image: tyauvil/alpine-vault-consul:latest
   user: vault
   volumes:
     - ./files/vault.hcl:/etc/vault.hcl
