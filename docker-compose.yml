@@ -1,0 +1,32 @@
+mariadb:
+  image: tyauvil/mariadb:10.1.8
+  environment:
+    - "MYSQL_ROOT_PASSWORD=secret"
+  ports:
+    - 3306:3306
+
+consul:
+  image: tyauvil/consul:0.5.2
+  user: consul
+  volumes:
+    - ./consul/consul.json:/etc/consul.json
+  ports:
+    - 8500:8500
+  environment:
+    - "GOMAXPROCS=2"
+  command: "consul agent -config-file=/etc/consul.json"
+
+vault:
+  image: tyauvil/vault:0.3.1
+  user: vault
+  volumes:
+    - ./vault/vault.hcl:/etc/vault.hcl
+    - ./vault/nsswitch.conf:/etc/nsswitch.conf
+  links:
+    - "consul:consul"
+    - "mariadb:mariadb"
+  ports:
+    - 8200:8200
+  environment:
+    - "GOMAXPROCS=2"
+  command: "vault server -config=/etc/vault.hcl"
