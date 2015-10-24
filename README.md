@@ -6,6 +6,16 @@ Repository for Vault demos. Vault and Consul containers based on Alpine Linux.
     $ docker-compose up
     $ export VAULT_ADDR="$docker_host_ip":8200
     $ vault init -key-shares=1 -key-threshold=1
+    Key 1: ec07477efcf07a319977e45cf3d3925f36f83ccbf1a092ff5f5c1e582b5ec042
+    Initial Root Token: 1845d3df-0d21-ac4a-84de-b444e7540927
+
+    Vault initialized with 1 keys and a key threshold of 1. Please
+    securely distribute the above keys. When the Vault is re-sealed,
+    restarted, or stopped, you must provide at least 1 of these keys
+    to unseal it again.
+
+    Vault does not store the master key. Without at least 1 keys,
+    your Vault will remain permanently sealed.
     $ vault unseal
 
 #### Write a secret, read it, then delete it
