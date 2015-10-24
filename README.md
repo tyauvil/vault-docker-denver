@@ -3,10 +3,10 @@
 Repository for Vault demos. Vault and Consul containers based on Alpine Linux.
 
 #### Vault in four easy steps
-1. docker-compose up
-2. export VAULT_ADDR=$docker_host_IP
-3. vault init
-4. vault unseal 
+    $ docker-compose up
+    $ export VAULT_ADDR=$docker_host_IP
+    $ vault init -key-shares=1 -key-threshold=1
+    $ vault unseal
 
 #### Write a secret, then read it, then delete it
 
@@ -22,12 +22,29 @@ Repository for Vault demos. Vault and Consul containers based on Alpine Linux.
 
 #### Create a policy, generate a token
 
-$ vi sample_policy.hcl
-$ cat sample_policy.hcl
-path "secret/app1/*" {
-policy = "write"
-}
+    $ vi sample_policy.hcl
+    $ cat sample_policy.hcl
+    path "secret/app1/*" {
+    policy = "write"
+    }
 
-path "secret/app1/passwords/*" {
-policy = "deny"
-}
+    path "secret/app1/passwords/*" {
+    policy = "deny"
+    }
+    $ vault policy-write sample sample_policy.hcl
+    Policy 'sample' written.
+    $ vault token-create -policy=sample
+    Key            	Value
+    token          	d0d56c63-bc88-2e5a-0fbe-26eec7cb5755
+    token_duration 	2592000
+    token_renewable	true
+    token_policies 	[sample]    
+    $ vault write secret/app1/usernames/bob email=bob@bob.com
+    Success! Data written to: secret/app1/usernames/bob
+    $ vault read secret/app1/passwords/bob
+    Error reading secret/app1/passwords/bob: Error making API request.
+
+    URL: GET http://192.168.99.100:8200/v1/secret/app1/passwords/bob
+    Code: 403. Errors:
+
+    * permission denied
