@@ -64,7 +64,7 @@ Repository for Vault demos. Vault and Consul containers based on Alpine Linux.
     lease_renewable	true
     password       	bc8f8fd6-d4b1-dc23-525b-fca6da5ccae3
     username       	root-a0128255-b6
-    $ mysql> select User from user;
+    mysql> select User from user;
     +------------------+
     | User             |
     +------------------+
