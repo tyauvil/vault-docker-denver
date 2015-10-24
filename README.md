@@ -4,7 +4,7 @@ Repository for Vault demos. Vault and Consul containers based on Alpine Linux.
 
 #### Vault in four easy steps
     $ docker-compose up
-    $ export VAULT_ADDR=$docker_host_IP
+    $ export VAULT_ADDR="$docker_host_IP":8200
     $ vault init -key-shares=1 -key-threshold=1
     $ vault unseal
 
@@ -48,3 +48,27 @@ Repository for Vault demos. Vault and Consul containers based on Alpine Linux.
     Code: 403. Errors:
 
     * permission denied
+
+#### Dynamic secrets: use Vault to create a dynamic MySQL user account
+
+    $ vault mount mysql
+    Successfully mounted 'mysql' at 'mysql'!
+    $ vault write mysql/config/connection value="root:secret@tcp(mysql:3306)/"
+    Success! Data written to: mysql/config/connection
+    $ vault write mysql/roles/select sql="CREATE USER '{{name}}'@'%' IDENTIFIED BY '{{password}}'; GRANT SELECT ON *.* TO '{{name}}'@'%';"
+    Success! Data written to: mysql/roles/select
+    $ vault read mysql/creds/select
+    Key            	Value
+    lease_id       	mysql/creds/select/47ff1f5f-be45-9ddd-40da-426e92bac023
+    lease_duration 	3600
+    lease_renewable	true
+    password       	bc8f8fd6-d4b1-dc23-525b-fca6da5ccae3
+    username       	root-a0128255-b6
+    $ mysql> select User from user;
+    +------------------+
+    | User             |
+    +------------------+
+    | root             |
+    | root-a0128255-b6 |
+    +------------------+
+    2 rows in set (0.00 sec)
