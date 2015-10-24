@@ -4,11 +4,11 @@ Repository for Vault demos. Vault and Consul containers based on Alpine Linux.
 
 #### Vault in four easy steps
     $ docker-compose up
-    $ export VAULT_ADDR="$docker_host_IP":8200
+    $ export VAULT_ADDR="$docker_host_ip":8200
     $ vault init -key-shares=1 -key-threshold=1
     $ vault unseal
 
-#### Write a secret, then read it, then delete it
+#### Write a secret, read it, then delete it
 
     $ export VAULT_TOKEN=$vault_root_token
     $ vault write secret/foo value=bar
@@ -20,7 +20,7 @@ Repository for Vault demos. Vault and Consul containers based on Alpine Linux.
     $ vault delete secret/foo
     Success! Deleted 'secret/foo'
 
-#### Create a policy, generate a token
+#### Create a policy, generate a token, test permissions
 
     $ vi sample_policy.hcl
     $ cat sample_policy.hcl
@@ -64,6 +64,8 @@ Repository for Vault demos. Vault and Consul containers based on Alpine Linux.
     lease_renewable	true
     password       	bc8f8fd6-d4b1-dc23-525b-fca6da5ccae3
     username       	root-a0128255-b6
+    $ mysql -u root-a0128255-b6 -pbc8f8fd6-d4b1-dc23-525b-fca6da5ccae3 -h $"$docker_host_ip"
+    mysql> use mysql;
     mysql> select User from user;
     +------------------+
     | User             |
