@@ -1,6 +1,9 @@
-# vault-docker-denver
+# Denver Docker Meetup - Vault
+
+[![](https://badge.imagelayers.io/tyauvil/alipine-vault-consul:latest.svg)](https://imagelayers.io/?images=tyauvil/alipine-vault-consul:latest 'Get your own badge on imagelayers.io')
 
 Repository for Vault demos. Vault and Consul containers based on Alpine Linux.
+
 
 #### Vault in four easy steps
     $ docker-compose up
