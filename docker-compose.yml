@@ -6,10 +6,11 @@ mysql:
     - 3306:3306
 
 consul:
-  image: tyauvil/consul:0.5.2
+  #build: .
+  image: tyauvil/alipine-vault-consul:latest
   user: consul
   volumes:
-    - ./consul/consul.json:/etc/consul.json
+    - ./files/consul.json:/etc/consul.json
   ports:
     - 8500:8500
   environment:
@@ -17,10 +18,11 @@ consul:
   command: "consul agent -config-file=/etc/consul.json"
 
 vault:
-  image: tyauvil/vault:0.3.1
+  #build: .
+  image: tyauvil/alipine-vault-consul:latest
   user: vault
   volumes:
-    - ./vault/vault.hcl:/etc/vault.hcl
+    - ./files/vault.hcl:/etc/vault.hcl
   links:
     - "consul:consul"
     - "mysql:mysql"

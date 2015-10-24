@@ -2,10 +2,12 @@ FROM alpine:3.2
 
 MAINTAINER Ty Auvil <ty.auvil@gmail.com>
 
-ADD repositories /etc/apk/repositories
+ADD files/nsswitch.conf /etc/nsswitch.conf
+ADD files/repositories /etc/apk/repositories
 ADD https://dl.bintray.com/mitchellh/consul/0.5.2_web_ui.zip /tmp/consul_web_ui.zip
 
-RUN apk update && apk add consul@testing unzip && \
+RUN apk update && \
+    apk add consul@testing vault@testing unzip && \
     rm -f /var/cache/apk/* && \
     mkdir /data && \
     chown consul:consul /data && \
