@@ -1,6 +1,6 @@
 # Denver Docker Meetup - Vault
 
-[![](https://badge.imagelayers.io/tyauvil/alipine-vault-consul:latest.svg)](https://imagelayers.io/?images=tyauvil/alipine-vault-consul:latest 'Get your own badge on imagelayers.io')
+[![](https://badge.imagelayers.io/tyauvil/alpine-vault-consul:latest.svg)](https://imagelayers.io/?images=tyauvil/alpine-vault-consul:latest 'Get your own badge on imagelayers.io')
 
 Repository for Vault demos. Vault/Consul container based on Alpine Linux.
 
