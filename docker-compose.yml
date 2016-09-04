@@ -1,31 +1,37 @@
-consul:
-  image: consul:v0.6.4
-  user: consul
-  volumes:
-    - ./files/consul.json:/etc/consul.json
-  ports:
-    - 8500:8500
-  environment:
-    - "GOMAXPROCS=2"
-  command: "consul agent -config-file=/etc/consul.json"
+version: '2'
+services:
+  consul:
+    image: consul:v0.6.4
+    volumes:
+      - ./files/nsswitch.conf:/etc/nsswitch.conf
+      - ./files/consul.json:/etc/consul.json
+      - /consul/data
+    ports:
+      - 8500:8500
+    environment:
+      - "GOMAXPROCS=2"
+    command: "consul agent -config-file=/etc/consul.json"
 
-mariadb:
-  image: tyuvil/alpine-mariadb:v10.1.14
-  environment:
-    - "MYSQL_ROOT_PASSWORD=secret"
-  ports:
-    - 3306:3306
+  mariadb:
+    image: mariadb:10.1
+    environment:
+      - "MYSQL_ROOT_PASSWORD=secret"
+    ports:
+      - 3306:3306
 
-vault:
-  image: vault:v0.6.0
-  user: vault
-  volumes:
-    - ./files/vault.hcl:/etc/vault.hcl
-  links:
-    - "consul:consul"
-    - "mariadb:mariadb"
-  ports:
-    - 8200:8200
-  environment:
-    - "GOMAXPROCS=2"
-  command: "vault server -config=/etc/vault.hcl"
+  vault:
+    image: vault:v0.6.0
+    links:
+      - consul:consul
+      - mariadb:mariadb
+    depends_on:
+      - consul
+      - mariadb
+    volumes:
+      - ./files/nsswitch.conf:/etc/nsswitch.conf
+      - ./files/vault.hcl:/etc/vault.hcl
+    ports:
+      - 8200:8200
+    environment:
+      - "GOMAXPROCS=2"
+    command: "vault server -config=/etc/vault.hcl"
