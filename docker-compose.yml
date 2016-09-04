@@ -1,13 +1,5 @@
-mysql:
-  image: mysql:5.7
-  environment:
-    - "MYSQL_ROOT_PASSWORD=secret"
-  ports:
-    - 3306:3306
-
 consul:
-  #build: .
-  image: tyauvil/alpine-vault-consul:latest
+  image: consul:v0.6.4
   user: consul
   volumes:
     - ./files/consul.json:/etc/consul.json
@@ -17,15 +9,21 @@ consul:
     - "GOMAXPROCS=2"
   command: "consul agent -config-file=/etc/consul.json"
 
+mariadb:
+  image: tyuvil/alpine-mariadb:v10.1.14
+  environment:
+    - "MYSQL_ROOT_PASSWORD=secret"
+  ports:
+    - 3306:3306
+
 vault:
-  #build: .
-  image: tyauvil/alpine-vault-consul:latest
+  image: vault:v0.6.0
   user: vault
   volumes:
     - ./files/vault.hcl:/etc/vault.hcl
   links:
     - "consul:consul"
-    - "mysql:mysql"
+    - "mariadb:mariadb"
   ports:
     - 8200:8200
   environment:
