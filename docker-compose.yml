@@ -12,7 +12,7 @@ services:
       - "GOMAXPROCS=2"
     command: "consul agent -config-file=/etc/consul.json"
 
-  mariadb:
+  mysql:
     image: mariadb:10.1
     environment:
       - "MYSQL_ROOT_PASSWORD=secret"
@@ -23,7 +23,7 @@ services:
     image: vault:v0.6.0
     links:
       - consul:consul
-      - mariadb:mariadb
+      - mysql:mysql
     depends_on:
       - consul
       - mariadb
